@@ -30,7 +30,8 @@ function initialize_gmaps() {
         center: fsa,
         zoom: 13,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        styles: styleArr
+        styles: styleArr,
+        maxZoom: 16
     };
     // get the maps div's HTML obj
     var map_canvas_obj = document.getElementById("map-canvas");
