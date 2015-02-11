@@ -4,7 +4,9 @@ $(document).ready(function () {
 	generateAttraction = function (config) {
 		config.$all.find('.add').on('click', function () {
 			var attraction = config.$all.find(':selected').data();
+			console.log("FLAG",attraction);
 			new config.constructor(attraction);
+			config.addToDay(attraction);
 		});
 		config.all.forEach(function (attraction) {
 			var $option = $('<option></option>').text(attraction.name).data(attraction);
@@ -61,6 +63,7 @@ $(document).ready(function () {
 				config.$listGroup.append(this.$itineraryItem);
 				return this;
 			}
+
 		};
 	}
 });

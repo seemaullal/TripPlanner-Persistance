@@ -1,12 +1,12 @@
 var Day;
 
 $(document).ready(function () {
-	Day = function () {
+	Day = function (_id) {
 		this.hotel = null;
 		this.restaurants = [];
 		this.thingsToDo = [];
 		this.number = days.push(this);
-
+		this._id = _id;
 		this.buildButton()
 			.drawButton();
 	}

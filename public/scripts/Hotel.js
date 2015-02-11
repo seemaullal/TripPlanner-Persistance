@@ -8,7 +8,10 @@ $(document).ready(function () {
 			$listGroup: $('#my-hotel .list-group'),
 			$all: $('#all-hotels'),
 			all: data,
-			constructor: Hotel
+			constructor: Hotel,
+			addToDay: function(attraction) {
+				$.post('/day/' + currentDay.number + '/hotel', attraction);
+			}
 		});
 		// remove a hotel from the current day
 		Hotel.prototype.delete = function () {
@@ -17,9 +20,14 @@ $(document).ready(function () {
 				.eraseItineraryItem();
 			currentDay.hotel = null;
 		};
+
 	});
 	// construct a new hotel for the current day
 	Hotel = function (data) {
+		// console.log('/day/' + currentDay.number + '/hotel');
+		// $.post('/day/' + currentDay.number + '/hotel', { hotel: data }, function(data){
+		// 	console.log(data);
+		// });
 		var self = this;
 		eachKeyValue(data, function (key, val) {
 			self[key] = val;

@@ -8,7 +8,11 @@ $(document).ready(function () {
 			$listGroup: $('#my-restaurants .list-group'),
 			$all: $('#all-restaurants'),
 			all: restaurantData,
-			constructor: Restaurant
+			constructor: Restaurant,
+			addToDay: function(attraction) {
+				console.log("Make restaurant POST")
+				$.post('/day/' + currentDay.number + '/restaurants', attraction);
+			}
 		});
 
 		// remove a restaurant from the current day
