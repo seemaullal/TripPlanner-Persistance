@@ -22,6 +22,10 @@ $(document).ready(function () {
 			removed
 				.eraseMarker()
 				.eraseItineraryItem();
+			$.ajax({
+				url: '/day/' + currentDay.number + '/restaurants/' + this._id  ,
+				type: 'DELETE'
+			});
 		};
 	});
 

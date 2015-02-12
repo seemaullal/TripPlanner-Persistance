@@ -19,6 +19,10 @@ $(document).ready(function () {
 				.eraseMarker()
 				.eraseItineraryItem();
 			currentDay.hotel = null;
+			$.ajax({
+				url: '/day/' + currentDay.number + '/hotel',
+				type: 'DELETE'
+			});
 		};
 
 	});

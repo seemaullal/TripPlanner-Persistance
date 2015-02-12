@@ -21,6 +21,10 @@ $(document).ready(function () {
 			removed
 				.eraseMarker()
 				.eraseItineraryItem();
+			$.ajax({
+				url: '/day/' + currentDay.number + '/thingsToDo/' + this._id  ,
+				type: 'DELETE'
+			});
 		};
 	});
 

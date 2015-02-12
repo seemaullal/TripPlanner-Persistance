@@ -11,17 +11,22 @@ $(document).ready(function () {
 	// currentDay = new Day();
 	// currentDay.$button.addClass('current-day');
 	$.get('/day', function(dbdays) {
-		if (dbdays.length < 1) {
-			$.post("/day");
-			currentDay = new Day();
+		if (!dbdays.length) {
+			$.post("/day", function(data) {
+			currentDay = new Day(data._id);
 			currentDay.$button.addClass('current-day');
+			});
+			// $.post("/day");
+			// currentDay = new Day();
+			// currentDay.$button.addClass('current-day');
 		}
 
 		else {
 			var dayOne;
 			dbdays.forEach( function(dayToMake) {
 				currentDay = new Day(dayToMake._id);
-				if (dayToMake.number == 1) dayOne = currentDay;
+				currentDay.number = dayToMake.number;
+				if (currentDay.number == 1) dayOne = currentDay;
 				if (dayToMake.hotel) {
 					new Hotel(dayToMake.hotel);
 				}
@@ -37,6 +42,10 @@ $(document).ready(function () {
 				dayOne.switchTo();
 			
 			});
+			days.sort( function(day1,day2){
+				return day1.number-day2.number;
+			});
+			dayOne.switchTo();
 			currentDay = dayOne;
 			currentDay.$button.addClass('current-day');
 		}

@@ -4,7 +4,7 @@ var models = require('../models');
 
 dayRouter.get('/', function (req, res, next) {
     // serves up all days as json
-    models.Day.find().populate('hotel restaurants thingsToDo').exec( function(err,result) {
+    models.Day.find().sort({number:1}).populate('hotel restaurants thingsToDo').exec( function(err,result) {
         console.log(result);
         res.json(result);
     });  
@@ -17,12 +17,11 @@ dayRouter.post('/', function (req, res, next) {
     // });
     
     models.Day.find().count( function (err, numDays) {
-         var newDay = new models.Day( { number : numDays+1  } ) //change later
-        newDay.save();
-        res.send();
-     });
-    
-
+        var newDay = new models.Day( { number : numDays+1  } ) //change later
+        newDay.save(function( err, dayObj) {
+            res.json(dayObj);
+        });
+    });
 });
 
 dayRouter.get('/:id', function (req, res, next) {
@@ -65,6 +64,7 @@ attractionRouter.delete('/hotel', function (req, res, next) {
     var id = req.id;
     models.Day.findOne( {number : id} , function( err, day ) {
         day.hotel = undefined;
+        day.save();
         res.send();
     });
 
@@ -85,6 +85,7 @@ attractionRouter.delete('/restaurants/:id', function (req, res, next) {
     models.Day.findOne( {number : id} , function( err, day ) {
         var index = day.restaurants.indexOf(req.body._id);
         day.restaurants.splice(index,1);
+        day.save();
          res.send();
     });
 });
@@ -106,7 +107,8 @@ attractionRouter.delete('/thingsToDo/:id', function (req, res, next) {
     models.Day.findOne( {number : id} , function( err, day ) {
         var index = day.thingsToDo.indexOf(req.body._id);
         day.thingsToDo.splice(index,1);
-         res.send();
+        day.save();
+        res.send();
     });
 });
 
